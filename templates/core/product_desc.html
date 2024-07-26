@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        /* Basic reset and styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0); /* Linear gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: fadeIn 0.6s ease-out;
+            margin-top: 20px; /* Adjust as needed */
+            padding: 20px; /* Adjust as needed */
+        }
+
+        .product-image {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #ddd;
+            position: relative; /* Needed for hover overlay */
+        }
+
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-height: 400px; /* Limit maximum height for image */
+            animation: scaleImage 0.5s ease-out, fadeIn 1s ease-out;
+            transform-origin: center;
+        }
+
+        .product-image:hover img {
+            transform: scale(1.05); /* Scale up on hover */
+        }
+
+        .product-image::after {
+            content: ''; /* Required for pseudo-element */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2); /* Semi-transparent overlay */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.3s ease;
+            border-radius: 8px;
+            animation: fadeInOverlay 0.5s ease-out;
+        }
+
+        .product-image:hover::after {
+            opacity: 1; /* Show overlay on hover */
+        }
+
+        .product-details {
+            padding: 20px;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .product-name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .product-price {
+            font-size: 20px;
+            color: #007BFF;
+            margin-bottom: 15px;
+            display: block;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .product-category {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 15px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .product-description {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-top: 20px;
+            color: #444;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .add-to-cart-btn {
+            display: inline-block;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .back-link a {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #0056b3;
+        }
+
+        /* Keyframes for animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleImage {
+            from {
+                transform: scale(0.9);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInOverlay {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-image">
+            <img src="{{ product.img.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-details">
+            <div class="product-name">{{ product.name }}</div>
+            <div class="product-price">Price: ${{ product.price }}</div>
+            <div class="product-category">Category: {{ product.category }}</div>
+            <div class="product-description">
+                <p>{{ product.description }}</p>
+            </div>
+        </div>
+                <a href="{% url 'add_to_cart' product.pk %}" class="add-to-cart-btn btn-default">Add To Cart</a>
+    </div>
+</body>
+</html>
